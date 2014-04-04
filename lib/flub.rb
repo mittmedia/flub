@@ -2,9 +2,9 @@ require "flub/version"
 
 module Flub
   class << self
+
     def configure &block
       instance_eval(&block)
-      register_default
     end
 
     def on_error &block
@@ -17,22 +17,24 @@ module Flub
         begin
           handler.call e, data, log_level
         rescue StandardError => e
-          Rails.logger.error "#{self.class}#register_exception failed"
-          Rails.logger.error "#{e.class} - #{e.message}"
+          logger.error "#{self.class}#register_exception failed"
+          logger.error "#{e.class} - #{e.message}"
         end
       end
     end
 
-    private
+    def logger l = :default
+      @logger = l if l != :default
 
-    def register_default
-      if defined? Rails
-        on_error do |e, data, log_level|
-          Rails.logger.send(log_level, e.message)
-          Rails.logger.send(log_level, data) if data.keys.any?
-        end
-      end
+      @logger ||= NullLogger.new
+    end
+  end
+
+  class NullLogger < Logger
+    def initialize(*args)
     end
 
+    def add(*args, &block)
+    end
   end
 end
