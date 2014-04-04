@@ -21,6 +21,8 @@ Or install it yourself as:
 ## Usage
     # config/initializers/flub.rb
 
+    logger Rails.logger # optional, default is a NullLogger
+
     Flub.configure do
       on_error do |e, data, log_level|
         Rollbar.report_exception(e, nil, data, log_level)
@@ -33,6 +35,10 @@ Or install it yourself as:
 
     # somewhere else
     Flub.register_exception(ActiveRecord::RecordNotFound.new, {current_user: 123}, :warn)
+
+This will notify *both* Rollbar and New Relic about the error.
+
+Each block provided to `on_error` is executed in it's own begin/rescue, logging any failures to the provided logger.
 
 ## Contributing
 
