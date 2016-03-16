@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Flub::VERSION
   spec.authors       = ["Frans Krojegård"]
   spec.email         = ["frans@krojegard.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Simple error recipient for centralizing error logging in an app}
+  spec.description   = %q{Simple error recipient for centralizing error logging in an app}
   spec.homepage      = ""
   spec.license       = "MIT"
 
